@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Hello Notes</string>
+    <string name="add_note">Add Note</string>
+    <string name="add_title">Title</string>
+    <string name="details">Details</string>
+    <string name="error_title">Please Enter title</string>
+    <string name="error_desc">Please Enter Description</string>
+    <string name="note_added">Note added.</string>
+    <string name="update">Update</string>
+    <string name="back_warning">Tap back button again to exit!</string>
+    <string name="isfavorite">Favorite?</string>
+</resources>
