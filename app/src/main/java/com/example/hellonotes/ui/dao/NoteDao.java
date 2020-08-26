@@ -1,4 +1,4 @@
-package com.example.hellonotes;
+package com.example.hellonotes.ui.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -6,6 +6,8 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.hellonotes.ui.model.Note;
 
 import java.util.List;
 

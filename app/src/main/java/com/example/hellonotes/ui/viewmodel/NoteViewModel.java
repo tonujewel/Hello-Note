@@ -1,10 +1,13 @@
-package com.example.hellonotes;
+package com.example.hellonotes.ui.viewmodel;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.example.hellonotes.ui.db.NoteRepository;
+import com.example.hellonotes.ui.model.Note;
 
 import java.util.List;
 

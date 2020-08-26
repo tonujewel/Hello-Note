@@ -1,4 +1,4 @@
-package com.example.hellonotes;
+package com.example.hellonotes.ui.utils;
 
 public class AppConstant {
 

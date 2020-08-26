@@ -1,9 +1,13 @@
-package com.example.hellonotes;
+package com.example.hellonotes.ui.db;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+
+import com.example.hellonotes.ui.dao.NoteDao;
+import com.example.hellonotes.ui.db.NoteDatabase;
+import com.example.hellonotes.ui.model.Note;
 
 import java.util.List;
 

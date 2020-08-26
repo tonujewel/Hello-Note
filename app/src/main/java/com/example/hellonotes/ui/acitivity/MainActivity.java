@@ -1,12 +1,9 @@
-package com.example.hellonotes;
+package com.example.hellonotes.ui.acitivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.view.MotionEventCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -14,25 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.hellonotes.ui.utils.AppConstant;
+import com.example.hellonotes.ui.model.Note;
+import com.example.hellonotes.ui.viewmodel.NoteViewModel;
+import com.example.hellonotes.R;
+import com.example.hellonotes.ui.adapter.NoteAdapter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -40,7 +33,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private BottomSheetBehavior behavior;
-    private FloatingActionButton btnFav;
+    private FloatingActionButton btnFab;
     private AppCompatButton btnAddNote;
     private EditText edtTitle, edtDescription;
     private NoteViewModel noteViewModel;
@@ -56,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         View bottomSheet = findViewById(R.id.bottom_sheet);
         behavior = BottomSheetBehavior.from(bottomSheet);
-        btnFav = findViewById(R.id.button_fab);
+        btnFab = findViewById(R.id.button_fab);
         btnAddNote = findViewById(R.id.btnAddNote);
         edtTitle = findViewById(R.id.edtTitle);
         edtDescription = findViewById(R.id.edtDescription);
@@ -111,26 +104,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         // fab button on clink
-
-        btnFav.setOnClickListener(new View.OnClickListener() {
+        btnFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (behavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-                    behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                } else {
-                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }
-
-                AppConstant.isFromFab = "fav";
-                edtTitle.setText("");
-                edtDescription.setText("");
-                btnAddNote.setText(R.string.add_note);
+                openAddNoteScreen();
             }
         });
 
 
         // add note button
-
         btnAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,19 +131,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void openAddNoteScreen() {
+        if (behavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        } else {
+            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+        AppConstant.isFromFab = "fav";
+        edtTitle.setText("");
+        edtDescription.setText("");
+        btnAddNote.setText(R.string.add_note);
+    }
+
     private void saveNote() {
         String title = edtTitle.getText().toString().trim();
         String desc = edtDescription.getText().toString().trim();
         boolean isFavoriteChecked;
-
-
-        Log.d("check_constant", AppConstant.isFromFab + "");
         if (swtIsFavorite.isChecked()) {
             isFavoriteChecked = true;
         } else {
             isFavoriteChecked = false;
         }
-
 
         if (TextUtils.isEmpty(title)) {
             Toast.makeText(this, R.string.error_title, Toast.LENGTH_SHORT).show();
@@ -176,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
                 noteViewModel.insert(note);
                 edtTitle.setText("");
                 edtDescription.setText("");
-            //    hideSoftKeyboard(this);
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
             } else {
@@ -187,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
                 edtTitle.setText("");
                 edtDescription.setText("");
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-               // hideSoftKeyboard(this);
             }
 
         }
@@ -196,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         if (behavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
 
             if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
@@ -210,13 +197,4 @@ public class MainActivity extends AppCompatActivity {
             behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager) activity
-                .getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus()
-                .getWindowToken(), 0);
-    }
-
-
 }

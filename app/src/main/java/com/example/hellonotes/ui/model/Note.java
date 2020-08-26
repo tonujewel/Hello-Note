@@ -1,4 +1,4 @@
-package com.example.hellonotes;
+package com.example.hellonotes.ui.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
